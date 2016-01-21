@@ -116,10 +116,18 @@ for i in range(3):
 
 plt.close('all')
 # urz plot
-for j,p in enumerate(props):
-	fig,ax=plt.subplots()
-	cax=ax.scatter(a[:,0]+a[:,1],a[:,2]+a[:,3],c=a[:,4+j],s=50,edgecolor='none')
-	cbar=fig.colorbar(cax)
-	plt.savefig('urz+props+'+p+'.png')
-	plt.clf()
-	plt.close('all')
+# for j,p in enumerate(props):
+# 	fig,ax=plt.subplots()
+# 	cax=ax.scatter(a[:,0]+a[:,1],a[:,2]+a[:,3],c=a[:,4+j],s=50,edgecolor='none')
+# 	cbar=fig.colorbar(cax)
+# 	plt.savefig('urz+props+'+p+'.png')
+# 	plt.clf()
+# 	plt.close('all')
+mets=np.unique(a[:,-1])
+f, axes = plt.subplots(3,3, sharex = True,sharey=True)
+for i,ax in enumerate(axes.flat):
+	m=np.where((a[:,-1]==mets[i]))
+	cax=ax.scatter(a[:,1][m],a[:,2][m],c=a[:,4][m],s=5*a[:,5][m],edgecolor='none',label='[Fe/H]='+str(mets[i]))
+	ax.legend(loc='best')
+cbar = fig.colorbar(cax)
+plt.show()
