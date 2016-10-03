@@ -1,3 +1,8 @@
+###################################
+#
+# Python wrapper for PÉGASE (http://www2.iap.fr/pegase/pegasehr/index.html)
+#
+###################################
 import numpy as np
 import matplotlib.pyplot as plt
 from astropy.io import fits as p
@@ -5,10 +10,6 @@ import subprocess as s
 import glob as g
 import os
 
-redshift = 0.0231 # redshift of the Coma Cluster
-home=os.getcwd()
-os.chdir("/home/simon/Documents/PEGASE-HR/bin")
-s.call("rm *.dat",shell=True)
 prefix_run="test"
 name_SSPs_input="SSPs_input"
 s.call(["rm",name_SSPs_input])
@@ -56,5 +57,3 @@ for i,sp in enumerate(spectra_list):
     color_input.close()
     s.call("./colors_HR <"+name_color_input,shell=True)
 
-
-os.chdir(home)
