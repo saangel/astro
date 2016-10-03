@@ -46,7 +46,6 @@ spectra_input=open(name_spectra_input,"w")
 spectra_input.write(scenario_name)
 spectra_input.close()
 s.call("./spectra_HR <"+name_spectra_input,shell=True)
-# REDSHIFT SPECTRA
 name_color_input="color_input"
 for i,sp in enumerate(spectra_list):
     s.call(["rm",name_color_input])
