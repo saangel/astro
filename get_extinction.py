@@ -27,7 +27,6 @@ for f in filters:
     filts.append(eff)
     ax1.fill(wlr,eff,label=f.split('.')[0],alpha=.5,edgecolor="none")
     ax1.axhline(spec,color="black",lw=3,alpha=.5)
-#    ax1.set_xlabel(r"$\lambda$ in $\AA$")
     ax1.set_ylabel("Throughput")
     ax1.axes.get_xaxis().set_visible(False)
 
@@ -36,12 +35,12 @@ mags_notred=np.empty(len(filters))
 mags_red=np.empty((len(filters),len(coords)))
 alambdas=[ [[] for _ in coords] for _ in filts]
 
-# the following loop queries the IrsaDust database to obtain A_v and converts it to A_lambda following the Fitzpatrick law
+# the following loop queries the IrsaDust database to obtain A_v according to S&F
+# and converts it to A_lambda following the Fitzpatrick law
 for i,c in enumerate(coords):
   C = coord.SkyCoord(c,frame="fk5")
   table=IrsaDust.get_query_table(c, radius=2.0 * u.deg)
   a_v=table["ext SandF mean"]
-  #print eb_v.data[0]
   al_plot=f99(wl,a_v.data[0]*3.1)
   for j,f in enumerate(filts):
       alambdas[j][i]=f99(wls[j],a_v.data[0]*3.1)
@@ -53,8 +52,8 @@ alambdas=np.array(alambdas)
 # the following loop calculates the magnitudes of the flat f_nu spectra
 for j,f in enumerate(filts):
     diffs=np.gradient(wls[j])
-    flux=sum(wls[j]*spec*f*diffs) #integration
-    norm=sum(f*diffs/wls[j]) #normalisation following GALEXEV docsself.
+    flux=sum(wls[j]*spec*f*diffs)
+    norm=sum(f*diffs/wls[j])
     for k,c in enumerate(coords):
         tau=alambdas[j,k]/2.5/np.log10(np.e)
         spec_red=spec*np.exp(-tau)
